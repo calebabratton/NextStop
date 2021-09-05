@@ -55,8 +55,7 @@ export default function Events() {
   const classes = useStyles();
   const [eventData, updateEventData] = useState();
   const [category, updateCategory] = useState('NIGHTLIFE');
-  const { currentDestination } = useContext(AppContext);
-
+  const { currentDestination, currentLocation} = useContext(AppContext);
   // axios request for event data
   // eslint-disable-next-line no-shadow
   const getEventData = (latitude, longitude, category) => {
@@ -68,7 +67,8 @@ export default function Events() {
       },
     })
       .then((result) => {
-        updateEventData(result.data.data);
+        console.log(result.data.events);
+        updateEventData(result.data.events);
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
@@ -79,28 +79,28 @@ export default function Events() {
   useEffect(() => {
     if (currentDestination) {
       getEventData(currentDestination.lat, currentDestination.lng, category);
+      console.log(currentDestination);
+    } else if (currentLocation) {
+      getEventData(currentLocation.lat, currentLocation.lng)
     }
-  }, [currentDestination, category]);
+  }, [currentDestination, category, currentLocation]);
 
   return (
     <div className={classes.eventContainer}>
-      <div className={classes.formContainer}>
+      {/* <div className={classes.formContainer}>
         <EventForm
           category={category}
           updateCategory={updateCategory}
         />
-      </div>
+      </div> */}
       <div className={classes.entryContainer}>
         {eventData ? eventData.map((event, index) => (
           <Entry
             // eslint-disable-next-line react/no-array-index-key
             key={index}
             event={event}
-            category={category}
-            tags={event.tags}
-            name={event.name}
           />
-        )) : null }
+        )) : <div>Looking for some fun</div> }
       </div>
     </div>
   );

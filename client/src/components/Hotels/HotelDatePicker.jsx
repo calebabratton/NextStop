@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { RangeDatePicker } from 'react-google-flight-datepicker';
 import 'react-google-flight-datepicker/dist/main.css';
 
-export default function HotelDatePicker({ hotelInfo }) {
+export default function HotelDatePicker({ hotelInfo, setHotelInfo }) {
   function formatDate(date) {
     let d = new Date(date);
     let month = '' + (d.getMonth() + 1)
@@ -20,14 +20,18 @@ export default function HotelDatePicker({ hotelInfo }) {
   const onDateChange = (startDate, endDate) => {
     const start = formatDate(startDate);
     const end = formatDate(endDate);
-    hotelInfo.checkInDate = start;
-    hotelInfo.checkOutDate = end;
+    const addDate = {
+      ...hotelInfo,
+      checkInDate: start,
+      checkOutDate: end,
+    }
+    setHotelInfo(addDate)
   };
 
   return (
     <RangeDatePicker
-      startDate={new Date()}
-      endDate={new Date()}
+      startDate={hotelInfo ? hotelInfo.checkInDate : new Date()}
+      endDate={hotelInfo ? hotelInfo.checkOutDate : new Date()}
       onChange={(startDate, endDate) => onDateChange(startDate, endDate)}
     />
   );

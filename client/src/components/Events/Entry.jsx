@@ -8,7 +8,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Grid, Paper, Typography, ButtonBase, Button, Fab,
+  Grid, Paper, Typography, ButtonBase, Button, Fab, Image,
 } from '@material-ui/core/';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
@@ -17,24 +17,26 @@ import { AppContext } from '../../helpers/context';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: '100%',
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     margin: 'auto',
-    backgroundColor: '#f7fff7',
+    marginBottom: '2px',
+    width: '100%',
   },
   image: {
-    width: 128,
-    height: 128,
+    width: 50,
+    height: 50,
   },
   img: {
     margin: 'auto',
     display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    maxWidth: '12rem',
+    maxHeight: '12rem',
   },
-  input: {
-    display: 'none',
+  amenities: {
+    display: 'inline',
   },
 }));
 
@@ -44,11 +46,11 @@ export default function Entry({
   const [fav, setFav] = useState(false);
   const classes = useStyles();
   const { favorites, setFavorites } = useContext(AppContext);
-  const getOnlyFirstFour = (array) => {
-    const firstFour = array.slice(0, 4);
-    return firstFour;
-  };
-  const eventTags = getOnlyFirstFour(tags);
+  // const getOnlyFirstFour = (array) => {
+  //   const firstFour = array.slice(0, 4);
+  //   return firstFour;
+  // };
+  // const eventTags = getOnlyFirstFour(tags);
   let source;
   const eventIcons = (cat) => {
     cat === 'RESTAURANT' ? source = 'https://www.creativefabrica.com/wp-content/uploads/2018/12/Restaurant-icon-vector-by-Hoeda80-580x386.jpg' : null;
@@ -73,17 +75,26 @@ export default function Entry({
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} src={icon} />
-            </ButtonBase>
+          <img src={event.performers[0].image} />
+
           </Grid>
-          <Grid item xs={12} sm containers="true">
+          <Grid item xs={6} sm containers="true">
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
+                {/* <img src={event.performers[0].image} /> */}
                 <Typography gutterBottom variant="subtitle1">
-                  {name}
+                  {event.title}
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography gutterBottom variant="subtitle1">
+                  {event.stats.lowest_price === null ? <span>No Tickets Available</span> : <span>Starting At: ${event.stats.lowest_price}</span>}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1">
+                  {event.datetime_local}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1">
+                  <Button href={event.url} target="_blank" size="small" variant="contained" color="#cdc545">BUY TICKETS</Button>
+                </Typography>
+                {/* <Typography variant="body2" gutterBottom>
                   Tags:
                   {' '}
                   {eventTags[0]}
@@ -111,7 +122,8 @@ export default function Entry({
                         {eventTags[3]}
                       </span>
                     ) : null}
-                </Typography>
+                </Typography> */}
+              </Grid>
                 <div>
                   {fav === false ? (
                     <Fab
@@ -136,7 +148,6 @@ export default function Entry({
                     </Fab>
                   )}
                 </div>
-              </Grid>
             </Grid>
           </Grid>
         </Grid>

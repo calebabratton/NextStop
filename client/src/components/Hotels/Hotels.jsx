@@ -7,17 +7,11 @@ import HotelController from './HotelController.jsx';
 import HotelTile from './HotelTile.jsx';
 
 export default function Hotels() {
-  const { hotels, setHotels } = useContext(AppContext);
-  const [hotelInfo, setHotelInfo] = useState({
-    cityCode: '',
-    checkInDate: '',
-    checkOutDate: '',
-    adults: null,
-  });
+  const { hotels, setHotels, hotelInfo, setHotelInfo } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   useEffect(() => {
-  }, [hotels]);
+  }, [hotels, hotelInfo]);
   return (
     <div className={classes.tabContainer}>
       <HotelController

@@ -38,7 +38,14 @@ function App() {
   const [hotels, setHotels] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [currentDestination, setCurrentDestination] = useState({});
+  const [currentDestination, setCurrentDestination] = useState(null);
+  const [currentLocation, setLocation] = useState(null);
+  const [hotelInfo, setHotelInfo] = useState({
+    cityCode: '',
+    checkInDate: '',
+    checkOutDate: '',
+    adults: null,
+  });
 
   const classes = useStyles();
 
@@ -55,6 +62,9 @@ function App() {
       })
       // eslint-disable-next-line no-console
       .catch((err) => console.log('THIS IS ERROR', err));
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({lat: position.coords.latitude, lng: position.coords.longitude});
+      });
   }, []);
 
   return (
@@ -69,6 +79,9 @@ function App() {
             favorites,
             setFavorites,
             currentDestination,
+            currentLocation,
+            hotelInfo,
+            setHotelInfo,
           }}
           >
             <CssBaseline />
