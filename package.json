@@ -4,9 +4,9 @@
   "description": "A travel companion site that allows you to find events, hotels, and flights",
   "scripts": {
     "react-dev": "webpack --mode development --watch",
-    "build": "webpack --mode production",
+    // "build": "webpack --mode production",
     "server-dev": "npx nodemon server/index.js",
-    "start": "node server/index.js",
+    "start": "webpack --mode production node server/index.js",
     "test": "jest"
   },
   "author": "DarkPittVipers",
