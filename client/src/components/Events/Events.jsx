@@ -53,9 +53,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Events() {
   const classes = useStyles();
-  const [eventData, updateEventData] = useState();
   const [category, updateCategory] = useState('NIGHTLIFE');
-  const { currentDestination, currentLocation} = useContext(AppContext);
+  const { currentDestination, currentLocation, eventData, updateEventData} = useContext(AppContext);
   // axios request for event data
   // eslint-disable-next-line no-shadow
   const getEventData = (latitude, longitude, category) => {

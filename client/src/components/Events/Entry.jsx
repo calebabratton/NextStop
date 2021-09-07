@@ -13,6 +13,7 @@ import {
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
 import { AppContext } from '../../helpers/context';
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +76,7 @@ export default function Entry({
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
-          <img src={event.performers[0].image} />
+          <img style={{width: 250, height: 200, position: 'relative'}} src={event.performers[0].image || 'https://i.ibb.co/NpM9JYv/event.jpg'} />
 
           </Grid>
           <Grid item xs={6} sm containers="true">
@@ -89,7 +90,7 @@ export default function Entry({
                   {event.stats.lowest_price === null ? <span>No Tickets Available</span> : <span>Starting At: ${event.stats.lowest_price}</span>}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
-                  {event.datetime_local}
+                  {moment(event.datetime_local).format('MMMM Do YYYY, h:mm:ss a')}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
                   <Button href={event.url} target="_blank" size="small" variant="contained" color="#cdc545">BUY TICKETS</Button>

@@ -11,6 +11,7 @@ export default function Hotels() {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   useEffect(() => {
+    console.log(hotels)
   }, [hotels, hotelInfo]);
   return (
     <div className={classes.tabContainer}>

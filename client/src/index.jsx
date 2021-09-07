@@ -46,6 +46,7 @@ function App() {
     checkOutDate: '',
     adults: null,
   });
+  const [eventData, updateEventData] = useState(null);
 
   const classes = useStyles();
 
@@ -82,6 +83,8 @@ function App() {
             currentLocation,
             hotelInfo,
             setHotelInfo,
+            eventData,
+            updateEventData
           }}
           >
             <CssBaseline />
